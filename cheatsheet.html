@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCA-F Cheatsheet — Manju Malateshappa</title>
+  <meta name="description" content="Personalised exam cheatsheet for the Claude Certified Architect — Foundations exam. Reference notes only.">
+  <meta name="author" content="Manju Malateshappa">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ec7e09'/%3E%3Ctext x='50%25' y='54%25' font-family='-apple-system,system-ui,sans-serif' font-weight='700' font-size='34' fill='white' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <div class="container nav-row">
+      <a class="brand" href="index.html" aria-label="Manju Malateshappa — home">
+        <span class="brand-mark">M</span>
+        <span class="brand-name">Manju Malateshappa</span>
+      </a>
+      <nav class="primary-nav" aria-label="Primary">
+        <a href="index.html#about">About</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="certifications.html" class="active">Certifications</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button id="menu-toggle" class="icon-btn menu-only" type="button" aria-label="Open menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="hero cheatsheet-hero" aria-labelledby="cs-heading">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <p class="eyebrow">CCA-F · Personalised Edition</p>
+        <h1 id="cs-heading">Exam <span class="grad">Cheatsheet.</span></h1>
+        <p class="hero-sub">
+          A condensed, personalised reference I built during prep. Organised by exam domain, with decision tables, anti-patterns, and a glossary.
+          Useful as a final-week review. <a href="certifications.html#claude-architect">← Back to cert details</a>
+        </p>
+        <nav class="cs-toc" aria-label="Cheatsheet sections">
+          <a href="#overview">Overview</a>
+          <a href="#domain-1">D1 · Agent Architecture</a>
+          <a href="#domain-2">D2 · Tool Design &amp; MCP</a>
+          <a href="#domain-3">D3 · Claude Code Config</a>
+          <a href="#domain-4">D4 · Prompt Engineering</a>
+          <a href="#domain-5">D5 · Context Management</a>
+          <a href="#anti-patterns">Anti-patterns</a>
+          <a href="#glossary">Glossary</a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section id="overview" class="section cs-section">
+      <div class="container">
+        <header class="cs-section-head">
+          <h2>Exam overview</h2>
+          <p class="subtle">Domain weights · format · scoring</p>
+        </header>
+
+        <h3>Domain weights</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead>
+              <tr><th>Domain</th><th>Weight</th><th>Key focus</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1. Agent Architecture &amp; Orchestration</td><td>27%</td><td>Agentic loop, hub-and-spoke, hooks, subagents, escalation, error propagation</td></tr>
+              <tr><td>2. Tool Design &amp; MCP Integration</td><td>18%</td><td>Tool descriptions, isError, tool_choice, built-in tools, MCP scoping</td></tr>
+              <tr><td>3. Claude Code Config &amp; Workflows</td><td>20%</td><td>CLAUDE.md hierarchy, .claude/rules/, skills frontmatter, CI/CD, plan mode</td></tr>
+              <tr><td>4. Prompt Engineering &amp; Structured Output</td><td>20%</td><td>Few-shot vs explicit criteria, JSON schema, batch API, retry loops, self-critique</td></tr>
+              <tr><td>5. Context Management &amp; Reliability</td><td>15%</td><td>Progressive summarization, lost-in-middle, provenance, confidence calibration</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cs-callout-grid">
+          <div class="cs-callout cs-callout-good">
+            <h4>Golden rules — know these cold</h4>
+            <ul>
+              <li><code>stop_reason == 'end_turn'</code> is the ONLY valid loop exit signal</li>
+              <li>Programmatic hooks = 100% deterministic enforcement</li>
+              <li>Tool description = primary selection mechanism</li>
+              <li>Subagents have ZERO automatic context from parent</li>
+              <li><code>context: fork</code> isolates verbose skill / subagent output</li>
+              <li>Project scope beats user scope — same name → project wins</li>
+              <li><code>.claude/rules/</code> = path-triggered · Skills = task-triggered</li>
+              <li>Batch API = no multi-turn tool calling (async fire-and-forget)</li>
+              <li>Coordinator owns ALL inter-agent communication</li>
+            </ul>
+          </div>
+          <div class="cs-callout cs-callout-bad">
+            <h4>Never do these</h4>
+            <ul>
+              <li>Parse text for 'Task completed' to end loop</li>
+              <li>Prompt for financial/compliance rules (~3% fail rate)</li>
+              <li>Escalate on sentiment alone (angry ≠ complex)</li>
+              <li>Self-rated confidence (1–10) for routing decisions</li>
+              <li>Same session to generate AND review code</li>
+              <li>Subagent calls another subagent directly</li>
+              <li><code>/compact</code> for multi-phase tasks (lossy — use Explore subagent)</li>
+              <li>User-level <code>~/.claude/CLAUDE.md</code> for team standards</li>
+              <li>Generic MCP error: "Operation failed" (no recovery info)</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Common decision boundaries in production agent design</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead>
+              <tr>
+                <th>Situation</th>
+                <th>Correct choice</th>
+                <th>Tempting wrong choice</th>
+                <th>Why wrong choice fails</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Format/structure inconsistency across outputs</td><td><strong>Few-shot examples</strong></td><td>Explicit criteria</td><td>Examples demonstrate exact format; criteria specify rules — wrong tool for format problem</td></tr>
+              <tr><td>Novel pattern generalisation needed</td><td><strong>Explicit criteria</strong></td><td>Few-shot examples</td><td>Examples only cover shown cases; criteria extend to unseen patterns</td></tr>
+              <tr><td>Context window filling in multi-phase task (verbose Phase 1)</td><td><strong>Explore subagent</strong></td><td>/compact</td><td>/compact is lossy — exact numbers/dates/IDs lost; Explore returns accurate summary</td></tr>
+              <tr><td>Tool being misused for wrong purpose (fetch_url for search)</td><td><strong>Replace with scoped version</strong></td><td>Remove tool entirely</td><td>Removing breaks legitimate use; scoped tool makes misuse architecturally impossible</td></tr>
+              <tr><td>Skill output pollutes main conversation context</td><td><strong>context: fork in frontmatter</strong></td><td>Split into smaller skills</td><td>Splitting still runs in main context; fork isolates execution to subagent</td></tr>
+              <tr><td>Keyword-triggered tool misrouting (descriptions already clear)</td><td><strong>System prompt keyword steering</strong></td><td>Fix tool descriptions</td><td>Descriptions are clear — root cause is prompt-level routing instructions</td></tr>
+              <tr><td>Path-based auto-convention (tests scattered everywhere)</td><td><strong>.claude/rules/ glob patterns</strong></td><td>CLAUDE.md sections</td><td>CLAUDE.md requires Claude to infer; glob rules fire deterministically on file path</td></tr>
+              <tr><td>Task-specific context (useful for one task type only)</td><td><strong>Skill (on-demand)</strong></td><td>.claude/rules/ glob</td><td>Path rules fire for ALL work in that directory; skills fire only when invoked</td></tr>
+              <tr><td>Timeout ("no response") vs "0 results found"</td><td><strong>Distinguish semantically</strong></td><td>Report both as failures</td><td>Empty result = valid informative finding; timeout = access failure needing retry</td></tr>
+              <tr><td>Consistent explanation quality with variable per-case gaps</td><td><strong>Self-critique / evaluator-optimizer</strong></td><td>Few-shot examples</td><td>Examples can't cover unpredictable variable gaps; self-critique catches case-specific issues</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DOMAIN 1 ============ -->
+    <section id="domain-1" class="section section-alt cs-section">
+      <div class="container">
+        <header class="cs-section-head">
+          <h2>Domain 1 · Agent Architecture &amp; Orchestration</h2>
+          <p class="subtle">27% — largest domain</p>
+        </header>
+
+        <h3>The agentic loop — know this cold</h3>
+        <pre class="cs-code"><code>while True:
+    response = call_claude(messages, tools)
+    if response.stop_reason == 'end_turn':   # ← ONLY valid exit — return result
+        return response.content
+    if response.stop_reason == 'tool_use':   # ← keep looping
+        results = execute_tools(response.content)
+        messages.append(assistant_message(response))
+        messages.append(tool_results_message(results))
+    # max_tokens hit? → increase max_tokens or chunk input  |  stop_sequence → handle per app logic</code></pre>
+
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>stop_reason</th><th>Meaning</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td><code>end_turn</code></td><td>Model finished response</td><td>Return result to user — ONLY valid exit</td></tr>
+              <tr><td><code>tool_use</code></td><td>Model wants to call a tool</td><td>Execute tool, append result, loop again</td></tr>
+              <tr><td><code>max_tokens</code></td><td>Token limit hit, response truncated</td><td>Increase max_tokens or chunk input</td></tr>
+              <tr><td><code>stop_sequence</code></td><td>Stop sequence encountered</td><td>Handle per app logic</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Hub-and-spoke multi-agent topology</h3>
+        <div class="cs-callout-grid">
+          <div class="cs-callout cs-callout-good">
+            <h4>Coordinator rules</h4>
+            <ul>
+              <li>Coordinator owns ALL inter-agent communication</li>
+              <li>Decompose → delegate → aggregate → error handle</li>
+              <li>Subagents get ONLY explicitly passed context</li>
+              <li>Parallel spawn: multiple Task calls in ONE response</li>
+              <li><code>allowedTools</code> must include 'Task' on coordinator</li>
+              <li>Observability: coordinator sees everything</li>
+              <li>Coordinator decides retry/escalation — not subagents</li>
+              <li>Partition research space BEFORE delegating (distinct subtopics)</li>
+            </ul>
+          </div>
+          <div class="cs-callout cs-callout-bad">
+            <h4>Subagent anti-patterns</h4>
+            <ul>
+              <li>Subagent calls another subagent directly</li>
+              <li>Subagents assume they can read coordinator history</li>
+              <li>Passing full conversation log between agents</li>
+              <li>Coordinator decomposes topic too narrowly (misses domains)</li>
+              <li>"Task: analyze doc" with no context or format spec</li>
+              <li>Subagent requesting coordinator to retry upstream</li>
+              <li>Subagent aborting on partial failure (loses completed work)</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Hooks — deterministic vs probabilistic</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Method</th><th>Reliability</th><th>Use when</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>PreToolUse hook</td><td>100% deterministic</td><td>Financial ops, compliance, safety — MUST be 100%</td><td>Block refund &gt; $500, redirect to escalation</td></tr>
+              <tr><td>PostToolUse hook</td><td>100% deterministic</td><td>Data normalization, format unification</td><td>Convert Unix timestamps → ISO 8601; trim 40-field response to 5 needed fields</td></tr>
+              <tr><td>System prompt instruction</td><td>~97% probabilistic</td><td>General preferences, formatting, style only</td><td>'Try to resolve before escalating'</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Escalation patterns</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Situation</th><th>Action</th><th>Anti-pattern to avoid</th></tr></thead>
+            <tbody>
+              <tr><td>Customer says 'get me a manager'</td><td>Escalate IMMEDIATELY — no investigation first</td><td>Attempting to solve it first</td></tr>
+              <tr><td>Policy gap (policy silent on competitor price match)</td><td>Escalate — do NOT invent policy</td><td>Applying nearest-matching rule</td></tr>
+              <tr><td>Agent cannot make progress after attempts</td><td>Escalate after reasonable attempts</td><td>Infinite retry loop</td></tr>
+              <tr><td>Multiple customer matches found</td><td>Ask for additional identifier (email, phone, order#)</td><td>Heuristically guess the right one</td></tr>
+              <tr><td>High negative sentiment only</td><td>Do NOT escalate on sentiment alone</td><td>Sentiment ≠ case complexity</td></tr>
+              <tr><td>Refund amount &gt; $500 threshold</td><td>PreToolUse hook enforces blocking</td><td>System prompt instruction only (~3% fail)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Error propagation — semantic distinctions matter</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Error type</th><th>Who handles</th><th>What to return</th></tr></thead>
+            <tbody>
+              <tr><td>Transient (timeout, 503)</td><td>Subagent handles locally first</td><td>If unresolvable: structured context (failure type, query, partial results, alternatives)</td></tr>
+              <tr><td>Access failure (connection timeout)</td><td>Coordinator decides retry</td><td>DISTINCT from "0 results" — must be labelled as access failure, isRetryable: true</td></tr>
+              <tr><td>Valid empty result ("0 results found")</td><td>Accept as informative finding</td><td>NOT a failure — coordinator should NOT retry</td></tr>
+              <tr><td>Unresolvable (corrupted file, permission denied)</td><td>Propagate to coordinator</td><td>Include what was attempted, partial results, errorCategory: "permission"</td></tr>
+              <tr><td>Conflicting sources (govt 40% vs industry 12%)</td><td>Doc analysis completes its task</td><td>Include BOTH with attribution, conflict_detected: true → defer reconciliation to coordinator</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Task decomposition strategies</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Strategy</th><th>Use when</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Fixed pipeline (prompt chaining)</td><td>Predictable steps, known structure</td><td>Review each of 14 files, then integration pass</td></tr>
+              <tr><td>Multi-pass review</td><td>10+ files, avoid attention dilution</td><td>Pass 1: per-file local issues · Pass 2: cross-file dataflow</td></tr>
+              <tr><td>Explore subagent</td><td>Verbose Phase 1 threatening context window</td><td>Isolates discovery output, returns accurate summary to main session</td></tr>
+              <tr><td>Dynamic decomposition</td><td>Open-ended, scope unknown upfront</td><td>Discover codebase → find 3 untested modules → prioritize</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DOMAIN 2 ============ -->
+    <section id="domain-2" class="section cs-section">
+      <div class="container">
+        <header class="cs-section-head">
+          <h2>Domain 2 · Tool Design &amp; MCP Integration</h2>
+          <p class="subtle">18%</p>
+        </header>
+
+        <h3>Tool description — primary selection mechanism</h3>
+        <div class="cs-callout cs-callout-info">
+          The model selects tools based on descriptions alone. Minimal descriptions = unreliable selection. Overlapping descriptions = misrouting. Fix tool confusion by expanding descriptions BEFORE adding routing layers or prompt instructions.
+        </div>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>A good description includes</th><th>Example — what to write</th></tr></thead>
+            <tbody>
+              <tr><td>What it returns (exact fields)</td><td>'Returns customer profile: name, email, order_history, account_status'</td></tr>
+              <tr><td>Input formats + examples</td><td>'Accepts email (user@domain.com) OR numeric customer_id'</td></tr>
+              <tr><td>When to use THIS vs similar tools</td><td>'Use BEFORE lookup_order to verify identity. lookup_order = after verification'</td></tr>
+              <tr><td>Edge cases and constraints</td><td>'Returns multiple matches if name not unique — caller must disambiguate'</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Tool distribution — scoping principles</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Principle</th><th>Rule</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Least privilege</td><td>Each agent gets only tools it needs for its role</td><td>Synthesis agent: scoped verify_fact not full web_search</td></tr>
+              <tr><td>Constrained replacement</td><td>Misused tool → replace with scoped version (not remove)</td><td>fetch_url misused for search → load_document validates URL points to document format</td></tr>
+              <tr><td>4–5 tools per agent</td><td>More tools = more ambiguity = more misrouting</td><td>Separate agents for web search vs document analysis</td></tr>
+              <tr><td>Scoped cross-role tools</td><td>Shared tools OK if scoped to specific operation type</td><td>Synthesis gets verify_fact; complex verifications route via coordinator</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3><code>tool_choice</code> options</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Value</th><th>Behavior</th><th>Use when</th></tr></thead>
+            <tbody>
+              <tr><td><code>"auto"</code></td><td>Model decides: tool or text</td><td>Default for most use cases</td></tr>
+              <tr><td><code>"any"</code></td><td>Model MUST call some tool</td><td>Need guaranteed structured output</td></tr>
+              <tr><td><code>{"type":"tool","name":"x"}</code></td><td>Model MUST call this specific tool</td><td>Enforce step ordering, forced first step</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Structured MCP error response</h3>
+        <div class="cs-callout-grid">
+          <div class="cs-callout cs-callout-good">
+            <h4>Correct — structured context</h4>
+            <ul>
+              <li><code>isError: true</code></li>
+              <li><code>errorCategory: "transient" | "validation" | "business" | "permission"</code></li>
+              <li><code>isRetryable: true / false</code></li>
+              <li><code>message: "Orders API timeout"</code></li>
+              <li><code>attempted_query: "order_id=12345"</code></li>
+              <li><code>partial_results: null</code> (or actual partial data)</li>
+            </ul>
+          </div>
+          <div class="cs-callout cs-callout-bad">
+            <h4>Anti-pattern — generic error</h4>
+            <ul>
+              <li><code>{ "isError": true, "content": "Operation failed" }</code></li>
+              <li>Coordinator cannot decide: retry? change query? escalate?</li>
+              <li>All recovery context lost — coordinator is blind</li>
+            </ul>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Error category</th><th>Retryable?</th><th>Agent action</th></tr></thead>
+            <tbody>
+              <tr><td>transient</td><td>Yes — exponential backoff</td><td>Retry (timeout, 503, network errors)</td></tr>
+              <tr><td>validation</td><td>No — fix input</td><td>Modify request parameters and retry</td></tr>
+              <tr><td>business</td><td>No</td><td>Explain to user, propose alternative (policy violation)</td></tr>
+              <tr><td>permission</td><td>No</td><td>Escalate to human (access denied)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>MCP server configuration</h3>
+        <pre class="cs-code"><code># .mcp.json — project scope (commit this, NOT the tokens)
+{ "mcpServers": { "github": { "command": "npx", "args": ["-y", "@modelcontextprotocol/server-github"],
+    "env": { "GITHUB_TOKEN": "${GITHUB_TOKEN}" } } } }
+# ${ENV_VAR} substitution = one version-controlled config + per-developer credentials via environment variables</code></pre>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Scope</th><th>Location</th><th>Use for</th><th>Version controlled?</th></tr></thead>
+            <tbody>
+              <tr><td>Project</td><td><code>.mcp.json</code> at repo root</td><td>Shared team tooling, standard integrations</td><td>Yes — use <code>${TOKEN}</code> for secrets</td></tr>
+              <tr><td>User</td><td><code>~/.claude.json</code></td><td>Personal experiments, testing new servers</td><td>No — not shared via git</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Built-in tool selection reference</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Task</th><th>Tool</th><th>When</th></tr></thead>
+            <tbody>
+              <tr><td>Find files by name/pattern</td><td>Glob</td><td><code>**/*.test.tsx</code>, <code>src/components/**/*.ts</code></td></tr>
+              <tr><td>Search within file contents</td><td>Grep</td><td>Function name, import statement, error message</td></tr>
+              <tr><td>Read a complete file</td><td>Read</td><td>Load for analysis after Grep finds it</td></tr>
+              <tr><td>Create a new file from scratch</td><td>Write</td><td>Generating new test files</td></tr>
+              <tr><td>Edit specific snippet in a file</td><td>Edit</td><td>Unique text match required — fails if non-unique</td></tr>
+              <tr><td>Edit fails (non-unique match)</td><td>Read + Write fallback</td><td>Read full file, modify in memory, write back</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DOMAIN 3 ============ -->
+    <section id="domain-3" class="section section-alt cs-section">
+      <div class="container">
+        <header class="cs-section-head">
+          <h2>Domain 3 · Claude Code Config &amp; Workflows</h2>
+          <p class="subtle">20%</p>
+        </header>
+
+        <h3>CLAUDE.md hierarchy — 3 levels</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Level</th><th>Location</th><th>Scope</th><th>Version controlled?</th><th>Common mistake</th></tr></thead>
+            <tbody>
+              <tr><td>User</td><td><code>~/.claude/CLAUDE.md</code></td><td>One developer only</td><td>No</td><td>Putting team standards here — new members miss them</td></tr>
+              <tr><td>Project</td><td><code>.claude/CLAUDE.md</code> or root <code>CLAUDE.md</code></td><td>All contributors</td><td>Yes</td><td>Forgetting to commit — standards exist locally only</td></tr>
+              <tr><td>Directory</td><td><code>CLAUDE.md</code> in subdirectory</td><td>Files in that directory only</td><td>Yes</td><td>Duplicating test rules across every directory</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Three activation mechanisms — the key exam distinction</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Mechanism</th><th>How it fires</th><th>Best for</th><th>Location</th></tr></thead>
+            <tbody>
+              <tr><td>CLAUDE.md</td><td>Always loaded for every conversation</td><td>Universal standards: coding conventions, testing requirements that always apply</td><td><code>.claude/CLAUDE.md</code> (project-scoped)</td></tr>
+              <tr><td>.claude/rules/ glob</td><td>Auto-loads when editing file matching glob pattern</td><td>Path-specific conventions: test files, API handlers, migration scripts — cross-cutting</td><td><code>.claude/rules/testing.md</code> with <code>paths: ["**/*.test.tsx"]</code></td></tr>
+              <tr><td>Skills (slash commands)</td><td>Manually invoked via <code>/skill-name</code></td><td>Task-specific workflows: PR review, deployments, migrations, endpoint generation</td><td><code>.claude/commands/</code> or <code>.claude/skills/</code> (project); <code>~/.claude/</code> (personal)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cs-callout-grid">
+          <div class="cs-callout cs-callout-good">
+            <h4>Use .claude/rules/ when</h4>
+            <ul>
+              <li>Rules should apply to specific file types (glob paths)</li>
+              <li>Test conventions must apply across all test files regardless of directory</li>
+              <li>Cross-cutting patterns not tied to a single task</li>
+              <li>Context saving matters — irrelevant rules shouldn't load</li>
+            </ul>
+          </div>
+          <div class="cs-callout cs-callout-bad">
+            <h4>Avoid</h4>
+            <ul>
+              <li>Directory CLAUDE.md in every subfolder (duplication)</li>
+              <li>Root CLAUDE.md with all rules always loaded (bloat)</li>
+              <li>README.md for instructions (documentation, not loaded)</li>
+              <li>Relying on Claude to infer which CLAUDE.md section applies</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Skills — SKILL.md frontmatter parameters</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Parameter</th><th>Effect</th><th>When to use</th></tr></thead>
+            <tbody>
+              <tr><td><code>context: fork</code></td><td>Runs skill in isolated subagent — verbose output stays out of main session; prevents context bleed</td><td>Any skill with heavy output (analysis, codebase scanning, exploration); exploration skills that could bias subsequent implementation</td></tr>
+              <tr><td><code>allowed-tools</code></td><td>Restricts which tools the skill can call</td><td>Security: prevent accidental Write/Delete in read-only skills; prevent destructive operations</td></tr>
+              <tr><td><code>argument-hint</code></td><td>Prompts developer for a required argument at invocation time</td><td>When skill needs a path, module name, migration name, or other specific input (<code>$ARGUMENTS</code>)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cs-callout cs-callout-warn">
+          <strong>Scope precedence:</strong> Project skills (<code>.claude/skills/</code>) win over personal skills (<code>~/.claude/skills/</code>) with the SAME name. To use a personal variant alongside the project version, use a DIFFERENT name (e.g., <code>/my-commit</code> vs <code>/commit</code>). Same name = project version silently overrides.
+        </div>
+
+        <h3>Planning mode vs direct execution</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Mode</th><th>Use when</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td>Planning mode</td><td>Dozens of files; multiple valid architectural approaches; ambiguous requirements with divergent implications (Slack: webhooks vs bot tokens vs Slack App)</td><td>Read/Grep/Glob only — investigates and proposes plan — NO changes until approved</td></tr>
+              <tr><td>Direct execution</td><td>Single file fix, clear stack trace, one validation check, unambiguous change</td><td>Executes changes immediately</td></tr>
+              <tr><td>Explore subagent</td><td>Long verbose investigation that would fill main context before Phase 1 completes</td><td>Isolates discovery output, returns only accurate summary to main session</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>CI/CD integration patterns</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>CI pattern</th><th>How</th><th>Why</th></tr></thead>
+            <tbody>
+              <tr><td>Non-interactive mode</td><td><code>-p</code> / <code>--print</code> flag</td><td>Processes prompt, prints to stdout, exits — won't hang waiting for input</td></tr>
+              <tr><td>Structured findings for inline PR comments</td><td><code>--output-format json</code> + <code>--json-schema</code></td><td>Enforces well-formed JSON; parse + post via GitHub API</td></tr>
+              <tr><td>Session isolation for review</td><td>Independent Claude instance (no generator context)</td><td>Generator's reasoning context biases self-review — miss same mistakes</td></tr>
+              <tr><td>No duplicate comments on re-review</td><td>Include prior review results in context</td><td>Instruct: report only NEW or still-unresolved issues</td></tr>
+              <tr><td>Better test generation (no duplicates)</td><td>Include existing test files in context</td><td>Claude avoids suggesting already-covered scenarios</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DOMAIN 4 ============ -->
+    <section id="domain-4" class="section cs-section">
+      <div class="container">
+        <header class="cs-section-head">
+          <h2>Domain 4 · Prompt Engineering &amp; Structured Output</h2>
+          <p class="subtle">20%</p>
+        </header>
+
+        <h3>Few-shot vs explicit criteria — the key decision boundary</h3>
+        <div class="cs-callout-grid">
+          <div class="cs-callout cs-callout-good">
+            <h4>Use few-shot examples when</h4>
+            <ul>
+              <li>Format/structure inconsistency (show exact output shape)</li>
+              <li>Output varies across cases despite clear intent</li>
+              <li>Tool selection for ambiguous input (show: 'My order is broken' → call lookup_order, rationale: could mean damage)</li>
+              <li>Escalation calibration (show boundary cases explicitly)</li>
+              <li>Acceptable vs problematic code patterns</li>
+              <li>Multi-concern request decomposition (agent handles 1 concern at a time)</li>
+              <li>Exact output format: issue, location, severity, suggested fix</li>
+            </ul>
+          </div>
+          <div class="cs-callout cs-callout-good">
+            <h4>Use explicit criteria when</h4>
+            <ul>
+              <li>Novel pattern generalisation needed (rules extend to unseen cases)</li>
+              <li>Severity classification consistency (CRITICAL/HIGH/MEDIUM/LOW with concrete definitions)</li>
+              <li>Binary decisions with clear conditions (flag ONLY if confidence &gt; 0.85)</li>
+              <li>Eliminating vague instructions ('be conservative' → 'flag only if confidence &gt; 0.85')</li>
+              <li>Variable per-case gaps (→ pair with evaluator-optimizer self-critique)</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>Evaluator-optimizer / self-critique pattern</h3>
+        <div class="cs-callout cs-callout-info">
+          <strong>Use when:</strong> Output quality is inconsistently complete with variable, case-specific gaps — not a format problem. The agent evaluates its own draft against explicit completeness criteria (policy context included? timeline provided? next steps listed?) before presenting to the user. Catches gaps that few-shot examples cannot anticipate because gaps vary by case.
+        </div>
+
+        <h3>JSON schema — design rules</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Schema rule</th><th>Why it matters</th><th>Anti-pattern</th></tr></thead>
+            <tbody>
+              <tr><td><code>required</code>: only truly always-present fields</td><td>Required + absent data = model fabricates a value to satisfy constraint</td><td>Marking optional fields required</td></tr>
+              <tr><td><code>"type": ["string", "null"]</code> for optional fields</td><td>Model returns null instead of hallucinating a value</td><td><code>"type": "string"</code> on optional field</td></tr>
+              <tr><td><code>enum</code> + "other" + detail field</td><td>Captures unexpected values without losing them</td><td>No catch-all = novel values lost</td></tr>
+              <tr><td><code>enum</code> + "unclear" option</td><td>Honest uncertainty beats wrong categorization</td><td>Forcing model to pick wrong category</td></tr>
+              <tr><td><code>tool_choice: any</code> for guaranteed output</td><td>Without this, model may respond in plain text instead</td><td><code>tool_choice: "auto"</code> when structure required</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cs-callout cs-callout-warn">
+          <strong>Critical distinction:</strong> <code>tool_use</code> eliminates SYNTAX errors (invalid JSON, missing braces, wrong types). It does NOT prevent SEMANTIC errors (wrong values, totals that don't add up, info in wrong field). Use Pydantic validation + retry-with-feedback loops for semantic correctness.
+        </div>
+
+        <h3>Message Batches API — decision matrix</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Workflow</th><th>API</th><th>Reason</th></tr></thead>
+            <tbody>
+              <tr><td>Pre-merge check (developer waiting)</td><td>Synchronous</td><td>Cannot tolerate 24h delay = blocking workflow</td></tr>
+              <tr><td>Interactive code review session</td><td>Synchronous</td><td>Immediate feedback required</td></tr>
+              <tr><td>Overnight tech-debt report</td><td>Batch API</td><td>Non-blocking, result needed by morning — 50% savings</td></tr>
+              <tr><td>Weekly security audit</td><td>Batch API</td><td>Scheduled, latency-tolerant — 50% savings</td></tr>
+              <tr><td>Nightly test generation</td><td>Batch API</td><td>Already async/polling — 50% savings</td></tr>
+              <tr><td>Processing 10,000 documents</td><td>Batch API</td><td>High volume, non-urgent — large absolute savings</td></tr>
+              <tr><td>Iterative review (model requests files mid-review)</td><td>Synchronous only</td><td>Batch does NOT support multi-turn tool calling — async fire-and-forget = no mid-execution intercept</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cs-callout cs-callout-warn">
+          <strong>Batch API key facts:</strong> 50% cost savings · Up to 24h processing (NO latency SLA) · Does NOT support multi-turn tool calling within one request · <code>custom_id</code> field = correlate request to response · On failure: re-submit only failed docs by <code>custom_id</code>
+        </div>
+
+        <h3>Explicit criteria vs vague instructions</h3>
+        <div class="cs-callout-grid">
+          <div class="cs-callout cs-callout-good">
+            <h4>Correct — explicit criteria with examples</h4>
+            <ul>
+              <li>Flag ONLY if comment CONTRADICTS actual code behavior</li>
+              <li>Flag if comment references non-existent function</li>
+              <li>CRITICAL: runtime failure for users (NullPointerException in payment)</li>
+              <li>HIGH: security vulnerability (SQL injection, XSS)</li>
+              <li>MEDIUM: logic bug without immediate user impact</li>
+              <li>LOW: code quality (duplication, suboptimal algorithm)</li>
+            </ul>
+          </div>
+          <div class="cs-callout cs-callout-bad">
+            <h4>Vague — leads to inconsistency</h4>
+            <ul>
+              <li>Check code comments for accuracy</li>
+              <li>Be conservative about reporting issues</li>
+              <li>Be more precise in your findings</li>
+              <li>(No severity definitions = inconsistent ratings across PRs)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DOMAIN 5 ============ -->
+    <section id="domain-5" class="section section-alt cs-section">
+      <div class="container">
+        <header class="cs-section-head">
+          <h2>Domain 5 · Context Management &amp; Reliability</h2>
+          <p class="subtle">15%</p>
+        </header>
+
+        <h3>Progressive summarization risks</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>What gets lost when history compresses</th><th>Safe? (survives /compact)</th><th>Fix</th></tr></thead>
+            <tbody>
+              <tr><td>Exact dollar amounts ($89.99)</td><td>No → becomes 'some money'</td><td>Extract to case facts block</td></tr>
+              <tr><td>Percentages (15% discount)</td><td>No → becomes 'a discount'</td><td>Extract to case facts block</td></tr>
+              <tr><td>Specific dates (2025-01-15)</td><td>No → becomes 'recently'</td><td>Extract to case facts block</td></tr>
+              <tr><td>Order IDs, customer IDs</td><td>No → often lost entirely</td><td>Extract to case facts block</td></tr>
+              <tr><td>Actions taken (list of tool calls)</td><td>Partially</td><td>Keep in structured handoff payload</td></tr>
+              <tr><td>General topic / issue type</td><td>Yes — usually survives</td><td>Safe to leave in history</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Case facts block pattern</h3>
+        <pre class="cs-code"><code># Include in EVERY prompt, OUTSIDE the summarized history — update whenever new fact appears
+=== CASE FACTS ===
+Customer ID: CUST-12345   |   Order ID: ORD-67890   |   Order Date: 2025-01-15
+Order Amount: $89.99   |   Discount: 15% promo SAVE15
+Issue: Damaged item on delivery   |   Customer Request: Full refund   |   Status: Pending approval
+===</code></pre>
+
+        <h3>Lost-in-the-middle effect</h3>
+        <div class="cs-callout cs-callout-warn">
+          <strong>Problem:</strong> Models reliably process start and end of long inputs — middle sections frequently missed. 75K token input: first 15K and last 10K reliable, middle 50K often ignored.<br>
+          <strong>Fix:</strong> Key findings summary at TOP (primacy) → detailed data in middle with explicit section headers (navigation) → action items at BOTTOM (recency).
+        </div>
+
+        <h3>Context architecture — multi-agent</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Technique</th><th>How</th><th>Benefit</th></tr></thead>
+            <tbody>
+              <tr><td>Coordinator as context orchestrator</td><td>Maintains global state, allocates context budgets to subagents</td><td>Prevents one agent consuming others' context allocation</td></tr>
+              <tr><td>Constrained subagent context</td><td>Pass only task-specific data + required prior results</td><td>Subagents stay focused, fewer distractions from irrelevant context</td></tr>
+              <tr><td>Explore subagent</td><td>Delegate verbose discovery to isolated subagent, get summary back</td><td>Verbose Phase 1 output doesn't pollute main session; accurate (not lossy)</td></tr>
+              <tr><td>Scratchpad file</td><td>Agent writes key findings to <code>investigation-scratchpad.md</code></td><td>Survives <code>/compact</code> and session resumption — persists across context resets</td></tr>
+              <tr><td>Structured state persistence</td><td><code>agent-state/manifest.json</code>: {web-search: completed, ...}</td><td>Crash recovery without restarting from zero</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Provenance &amp; source tracking</h3>
+        <pre class="cs-code"><code># Correct — structured claim-to-source mapping (5 components)
+{"claim": "AI music market $3.2B", "source_url": "https://example.com/report",
+ "source_name": "Global AI Music Report 2024", "publication_date": "2024-06-15", "confidence": 0.9}
+# Conflicting sources — preserve BOTH, annotate, never arbitrarily pick one
+{"values": [{"value":"12%","source":"Spotify 2024-03"},{"value":"8%","source":"MIA Survey 2024-07"}],
+ "conflict_detected": true, "explanation": "Different methodology and time period"}</code></pre>
+
+        <h3>Confidence calibration &amp; reliability</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Concept</th><th>What it means</th><th>Anti-pattern</th></tr></thead>
+            <tbody>
+              <tr><td>Field-level confidence scores</td><td>Score each extracted field individually (not just the whole doc)</td><td>Single doc-level confidence score only</td></tr>
+              <tr><td>Stratified random sampling</td><td>Audit high-confidence extractions by document type AND field segment</td><td>Only audit low-confidence extractions</td></tr>
+              <tr><td>Aggregate metrics mislead</td><td>97% overall accuracy can hide 40% error rate on specific doc types</td><td>Reporting only overall accuracy</td></tr>
+              <tr><td>Coverage annotations</td><td>Mark synthesis sections as FULL / PARTIAL / NOT COVERED + reason</td><td>Silent omission of missing data sources</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Session management</h3>
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Command / concept</th><th>When to use</th><th>Risk / note</th></tr></thead>
+            <tbody>
+              <tr><td><code>--resume session-name</code></td><td>Continue long investigation across sessions</td><td>Stale tool results if files changed since last session</td></tr>
+              <tr><td><code>fork_session</code></td><td>Compare two approaches from same starting point</td><td>Forks diverge independently after branch point</td></tr>
+              <tr><td>Start new session</td><td>Results are stale, lots of time has passed</td><td>Provide summary: 'Here's what we found so far: …'</td></tr>
+              <tr><td><code>/compact</code></td><td>Context filling — LAST RESORT for single-phase tasks only</td><td>Numeric values, dates, IDs can be lost in summary</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ANTI-PATTERNS ============ -->
+    <section id="anti-patterns" class="section cs-section">
+      <div class="container">
+        <header class="cs-section-head">
+          <h2>Common anti-patterns in production agent systems</h2>
+          <p class="subtle">Engineering pitfalls worth recognising and avoiding</p>
+        </header>
+
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Anti-pattern</th><th>Why it fails</th><th>Correct approach</th></tr></thead>
+            <tbody>
+              <tr><td>Prompt for critical compliance ('NEVER do X without approval')</td><td>~3% failure rate — model can be overridden by context. Financial/safety must be 100%</td><td>PreToolUse hook that programmatically blocks or redirects</td></tr>
+              <tr><td>Parsing text to end agentic loop ('Task completed', 'anything else?')</td><td>Model can produce these phrases mid-task. Text parsing is fragile and unreliable</td><td><code>stop_reason == 'end_turn'</code> is the ONLY valid signal</td></tr>
+              <tr><td>Sentiment analysis for escalation (escalate when customer is angry)</td><td>Sentiment ≠ case complexity. Angry customer with simple return ≠ complex policy case</td><td>Explicit criteria: escalate on policy gap / explicit request / no progress</td></tr>
+              <tr><td>Self-rated confidence (1–10) for routing ('confidence: 8 → auto-process')</td><td>Model can be confidently wrong. Calibration is poor without labeled validation data</td><td>Calibrate on labeled validation sets with stratified sampling</td></tr>
+              <tr><td>Generic MCP error response ('Operation failed')</td><td>Coordinator cannot decide recovery: retry? escalate? continues?</td><td>Structured: errorCategory, isRetryable, attempted_query, partial_results</td></tr>
+              <tr><td>Single-pass review of 10+ files</td><td>Attention dilution: shallow coverage, inconsistent depth, contradictory findings across files</td><td>Per-file pass (local issues) + integration pass (cross-file)</td></tr>
+              <tr><td>User-level <code>~/.claude/CLAUDE.md</code> for team standards</td><td>New team members never receive the instructions. Only exists for one developer's machine</td><td><code>.claude/CLAUDE.md</code> (project level, version controlled)</td></tr>
+              <tr><td>Required fields on optional information in JSON schema</td><td>If info absent from source, model fabricates a value to satisfy the required constraint</td><td><code>"type": ["string", "null"]</code> + exclude from required array</td></tr>
+              <tr><td>Batch API for blocking workflows (pre-merge checks)</td><td>Up to 24h with no latency SLA — developer blocked waiting to merge</td><td>Synchronous API for blocking; batch only for overnight/weekly scheduled tasks</td></tr>
+              <tr><td>Same session to generate AND review code</td><td>Model retains its reasoning context and is less likely to challenge its own decisions</td><td>Independent Claude instance for review without generator context</td></tr>
+              <tr><td>Subagent calls another subagent directly (bypassing coordinator)</td><td>No central observability, no uniform error handling, no control over what coordinator receives</td><td>All communication flows through coordinator only</td></tr>
+              <tr><td>Overly narrow task decomposition (creative industries → only visual art)</td><td>Subagents execute correctly within wrong scope. Bug is in coordinator's decomposition logic</td><td>Coordinator must cover full topic scope before delegating distinct subtopics</td></tr>
+              <tr><td>Silent error suppression (return empty results = success)</td><td>Coordinator thinks no matches found when search actually failed</td><td>Distinguish access failures from valid empty results explicitly with error semantics</td></tr>
+              <tr><td>Abort entire workflow on one subagent failure</td><td>Loses all partial results from successful subagents that ran before the failure</td><td>Continue with partial results, annotate coverage gaps in synthesis output</td></tr>
+              <tr><td><code>/compact</code> for multi-phase tasks (context window filling)</td><td>Lossy — exact numbers, dates, IDs lost in summary; subsequent phases have degraded context</td><td>Explore subagent for verbose Phase 1 — returns accurate summary to main session</td></tr>
+              <tr><td>Instructions in README.md or directory CLAUDE.md for path-specific rules</td><td>README.md is documentation — not loaded as instructions. Directory CLAUDE.md requires duplication</td><td><code>.claude/rules/</code> with glob frontmatter — auto-loads for matching file paths</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GLOSSARY ============ -->
+    <section id="glossary" class="section section-alt cs-section">
+      <div class="container">
+        <header class="cs-section-head">
+          <h2>Quick reference glossary</h2>
+          <p class="subtle">Terms, formats, and key definitions</p>
+        </header>
+
+        <div class="table-wrap">
+          <table class="cs-table">
+            <thead><tr><th>Term / keyword</th><th>Definition / when used</th></tr></thead>
+            <tbody>
+              <tr><td><code>stop_reason</code></td><td>API response field. <code>end_turn</code> = done (ONLY valid exit). <code>tool_use</code> = execute tool and loop. <code>max_tokens</code> = response truncated</td></tr>
+              <tr><td><code>tool_choice: auto</code></td><td>Model decides whether to call a tool or respond in text. Default for most use cases</td></tr>
+              <tr><td><code>tool_choice: any</code></td><td>Model MUST call some tool. Use when guaranteed structured output is required</td></tr>
+              <tr><td><code>tool_choice: {tool}</code></td><td>Model MUST call this specific tool. Use to enforce step ordering or first-step guarantees</td></tr>
+              <tr><td><code>isError: true</code></td><td>MCP error response flag. Always pair with structured context (errorCategory, isRetryable, message, attempted_query)</td></tr>
+              <tr><td><code>Task</code> tool</td><td>How coordinator spawns subagents. Must be in coordinator's <code>allowedTools</code> list for parallel spawning</td></tr>
+              <tr><td><code>allowedTools</code></td><td>AgentDefinition parameter listing permitted tools. Principle of least privilege — fewer = more reliable, less misuse</td></tr>
+              <tr><td><code>context: fork</code></td><td>SKILL.md frontmatter. Runs skill in isolated subagent. Verbose output doesn't pollute main session. Prevents context bleed</td></tr>
+              <tr><td><code>allowed-tools</code></td><td>SKILL.md frontmatter. Restricts which tools the skill can invoke. Use for security and least-privilege enforcement</td></tr>
+              <tr><td><code>argument-hint</code></td><td>SKILL.md frontmatter. Prompts user to provide an argument when skill invoked without one. Uses <code>$ARGUMENTS</code></td></tr>
+              <tr><td><code>.claude/rules/</code></td><td>Directory for topic-scoped rule files. YAML frontmatter with paths: glob patterns for conditional (path-triggered) loading</td></tr>
+              <tr><td><code>paths: glob</code></td><td>YAML frontmatter in <code>.claude/rules/</code> files. Rule loads ONLY when editing a file matching the pattern</td></tr>
+              <tr><td><code>@import</code> syntax</td><td>CLAUDE.md can reference external files: <code>@./standards/testing.md</code>. Relative to file location. Max nesting depth: 5</td></tr>
+              <tr><td><code>-p</code> / <code>--print</code></td><td>Claude Code CLI flag for non-interactive mode. Processes prompt, prints to stdout, exits. Required for CI/CD</td></tr>
+              <tr><td><code>--output-format json</code></td><td>Claude Code CLI flag. Returns structured JSON. Pair with <code>--json-schema</code> for validated, schema-enforced output</td></tr>
+              <tr><td><code>fork_session</code></td><td>Creates independent investigation branch from shared context. Forks diverge independently afterward</td></tr>
+              <tr><td><code>--resume name</code></td><td>Continues a named session. Risk: tool results may be stale if files changed since last session</td></tr>
+              <tr><td><code>/compact</code></td><td>Built-in command to summarize conversation history. Warning: exact numbers and dates may be lost. Last resort only</td></tr>
+              <tr><td><code>custom_id</code></td><td>Batch API field to correlate request to response. Use to re-submit only failed docs on failure</td></tr>
+              <tr><td>hub-and-spoke</td><td>Multi-agent topology. Coordinator at center, subagents at spokes. All communication via coordinator only</td></tr>
+              <tr><td>lost-in-the-middle</td><td>Model attention effect. Start and end of long inputs processed reliably, middle sections frequently missed</td></tr>
+              <tr><td>case facts block</td><td>Structured persistent facts block included in every prompt OUTSIDE the summarized history. Update as new facts appear</td></tr>
+              <tr><td>scratchpad file</td><td><code>investigation-scratchpad.md</code>: agent writes key findings, reads when context degrades or session resumes</td></tr>
+              <tr><td>stratified sampling</td><td>Audit high-confidence extractions by document type AND field segment — not just overall accuracy</td></tr>
+              <tr><td>coverage annotations</td><td>In synthesis output: mark sections as FULL COVERAGE / PARTIAL COVERAGE / NOT COVERED with reason</td></tr>
+              <tr><td>provenance</td><td>Claim-to-source mapping: claim, source_url, source_name, publication_date, confidence per claim</td></tr>
+              <tr><td>planning mode</td><td>Claude Code mode: Read/Grep/Glob only — investigates and proposes plan — no changes until approved</td></tr>
+              <tr><td>evaluator-optimizer</td><td>Pattern: agent critiques its own draft against explicit criteria before presenting. Catches variable per-case gaps</td></tr>
+              <tr><td>PreToolUse hook</td><td>Intercepts BEFORE tool call. 100% deterministic. Required for financial thresholds, compliance, safety rules</td></tr>
+              <tr><td>PostToolUse hook</td><td>Intercepts AFTER tool result. 100% deterministic. Use for data normalization, format unification, field trimming</td></tr>
+              <tr><td>constrained replacement</td><td>When a tool is misused, replace with a scoped version (not remove). Makes misuse architecturally impossible</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="back-link"><a href="#top">↑ Back to top</a> · <a href="certifications.html#claude-architect">Back to cert details</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Manju Malateshappa · Vancouver, Canada</p>
+      <p class="subtle">Personalised study notes — not affiliated with or endorsed by Anthropic.</p>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
