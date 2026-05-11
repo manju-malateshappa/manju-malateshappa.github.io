@@ -152,6 +152,23 @@
     });
 })();
 
+// ===== Brand link: always scroll to top (works around sticky-header anchor quirk) =====
+(() => {
+  const brand = document.querySelector('a.brand');
+  if (!brand) return;
+  const href = brand.getAttribute('href') || '';
+  // Only intercept same-page hash anchors; cross-page hrefs (e.g. "index.html") navigate natively
+  if (!href.startsWith('#')) return;
+  brand.addEventListener('click', e => {
+    e.preventDefault();
+    // Respect CSS scroll-behavior on html (smooth in this site)
+    window.scrollTo(0, 0);
+    if (location.hash) {
+      history.replaceState('', document.title, location.pathname + location.search);
+    }
+  });
+})();
+
 // ===== Certifications page: hash-routed cert detail viewer =====
 (() => {
   'use strict';
