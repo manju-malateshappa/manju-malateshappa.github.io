@@ -386,6 +386,33 @@ button { font: inherit; color: inherit; }
 }
 .cheatsheet-cta .subtle { margin: 0; font-size: 0.92rem; }
 
+/* Cert hash router: hero by default, single cert detail when hash matches.
+   :target handles the pre-JS deep-link case to avoid a flash; .is-active is
+   the JS-managed state used for runtime hash changes including pushState. */
+html.js .cert-detail { display: none; }
+html.js .cert-detail:target,
+html.js .cert-detail.is-active { display: block; }
+html.js.cert-open .certs-hero { display: none; }
+
+.cert-back { display: none; margin: 0 0 1.5rem; font-size: 0.9rem; }
+html.js .cert-back { display: block; }
+.cert-back a {
+  display: inline-flex; align-items: center;
+  color: var(--text-muted);
+  padding: 0.4rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-weight: 500;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.cert-back a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  text-decoration: none;
+}
+
 /* Recap details — collapsible items for gap analysis & topic patterns */
 .recap-list { list-style: none; padding: 0; margin: 0; }
 .recap-list li {

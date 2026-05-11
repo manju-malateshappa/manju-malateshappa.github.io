@@ -11,6 +11,13 @@
   <meta property="og:description" content="How I prepared for each certification — domains, approach, and resources.">
   <meta property="og:type" content="website">
 
+  <script>
+    /* Pre-paint: enable JS-driven cert routing and avoid hero flash on deep links */
+    document.documentElement.classList.add('js');
+    if (['#claude-architect', '#terraform-associate'].includes(location.hash)) {
+      document.documentElement.classList.add('cert-open');
+    }
+  </script>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ec7e09'/%3E%3Ctext x='50%25' y='54%25' font-family='-apple-system,system-ui,sans-serif' font-weight='700' font-size='34' fill='white' text-anchor='middle' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
 
@@ -70,8 +77,12 @@
     </section>
 
     <!-- CLAUDE CERTIFIED ARCHITECT -->
-    <section id="claude-architect" class="section" aria-labelledby="cca-heading">
+    <section id="claude-architect" class="section cert-detail" aria-labelledby="cca-heading">
       <div class="container">
+
+        <p class="cert-back">
+          <a href="certifications.html" data-action="back-to-certs" aria-label="Back to certifications list">← Back to certifications</a>
+        </p>
 
         <div class="cert-header">
           <div class="cert-header-text">
@@ -794,13 +805,17 @@ the answer key only, matching the real exam format.</code></pre>
 
         </div>
 
-        <p class="back-link"><a href="#top">↑ Back to top</a></p>
+        <p class="back-link"><a href="certifications.html" data-action="back-to-certs">← Back to certifications</a></p>
       </div>
     </section>
 
     <!-- HASHICORP TERRAFORM -->
-    <section id="terraform-associate" class="section section-alt" aria-labelledby="tf-heading">
+    <section id="terraform-associate" class="section section-alt cert-detail" aria-labelledby="tf-heading">
       <div class="container">
+
+        <p class="cert-back">
+          <a href="certifications.html" data-action="back-to-certs" aria-label="Back to certifications list">← Back to certifications</a>
+        </p>
 
         <div class="cert-header">
           <div class="cert-header-text">
@@ -827,7 +842,7 @@ the answer key only, matching the real exam format.</code></pre>
           </article>
         </div>
 
-        <p class="back-link"><a href="#top">↑ Back to top</a></p>
+        <p class="back-link"><a href="certifications.html" data-action="back-to-certs">← Back to certifications</a></p>
       </div>
     </section>
 

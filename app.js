@@ -151,3 +151,44 @@
       render(FALLBACK);
     });
 })();
+
+// ===== Certifications page: hash-routed cert detail viewer =====
+(() => {
+  'use strict';
+  const CERT_IDS = ['claude-architect', 'terraform-associate'];
+
+  const hero = document.querySelector('.certs-hero');
+  const details = Array.from(document.querySelectorAll('.cert-detail'));
+  if (!hero || !details.length) return; // not the certifications page
+
+  const root = document.documentElement;
+
+  const render = () => {
+    const hash = (location.hash || '').replace(/^#/, '');
+    const id = CERT_IDS.includes(hash) ? hash : null;
+    details.forEach(d => d.classList.toggle('is-active', d.id === id));
+    root.classList.toggle('cert-open', !!id);
+    window.scrollTo(0, 0);
+    if (id) {
+      const heading = document.getElementById(id).querySelector('h2');
+      if (heading) {
+        heading.setAttribute('tabindex', '-1');
+        heading.focus({ preventScroll: true });
+      }
+    }
+  };
+
+  render();
+  window.addEventListener('hashchange', render);
+  window.addEventListener('popstate', render);
+
+  document.querySelectorAll('[data-action="back-to-certs"]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      if (location.hash) {
+        history.pushState('', document.title, location.pathname + location.search);
+        render();
+      }
+    });
+  });
+})();
