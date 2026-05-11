@@ -386,11 +386,11 @@ button { font: inherit; color: inherit; }
 }
 .cheatsheet-cta .subtle { margin: 0; font-size: 0.92rem; }
 
-/* Cert hash router: hero by default, single cert detail when hash matches.
-   :target handles the pre-JS deep-link case to avoid a flash; .is-active is
-   the JS-managed state used for runtime hash changes including pushState. */
+/* Cert hash router: hero by default, single cert detail when .is-active.
+   Solely JS-controlled — :target would leave cert detail visible after
+   pushState clears the fragment (Chromium does not always re-evaluate :target
+   on pushState that changes the hash). */
 html.js .cert-detail { display: none; }
-html.js .cert-detail:target,
 html.js .cert-detail.is-active { display: block; }
 html.js.cert-open .certs-hero { display: none; }
 
