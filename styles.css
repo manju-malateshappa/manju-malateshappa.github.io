@@ -346,6 +346,7 @@ button { font: inherit; color: inherit; }
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 1.4rem 1.5rem;
   box-shadow: var(--shadow-sm);
+  min-width: 0;
 }
 .cert-card h3 {
   font-size: 1rem; margin-bottom: 0.9rem; color: var(--accent);
@@ -502,6 +503,7 @@ html.js .cert-back { display: block; }
   .cert-header { grid-template-columns: 1fr; }
   .cert-score { justify-self: start; min-width: 0; }
   .cert-grid { grid-template-columns: 1fr; }
+  .cheatsheet-cta .btn { white-space: normal; text-align: center; }
   .recap-prompt .cs-code { max-height: 380px; font-size: 0.78rem; }
 }
 
@@ -605,7 +607,7 @@ html.js .cert-back { display: block; }
 .cs-code {
   background: var(--surface-2); border: 1px solid var(--border);
   border-radius: var(--radius); padding: 1rem 1.2rem;
-  overflow-x: auto; margin: 0 0 1.5rem;
+  overflow-x: auto; max-width: 100%; margin: 0 0 1.5rem;
   font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.55;
 }
 .cs-code code { color: var(--text); background: none; padding: 0; border: 0; }
