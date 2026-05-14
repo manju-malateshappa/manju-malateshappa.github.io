@@ -26,10 +26,11 @@
           async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
+  <span id="top" aria-hidden="true"></span>
 
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header" id="top">
+  <header class="site-header">
     <div class="container nav-row">
       <a class="brand" href="index.html" aria-label="Manju Malateshappa — home">
         <span class="brand-mark">M</span>
@@ -90,7 +91,7 @@
             <h2 id="cca-heading">Claude Certified Architect — Foundations (CCA-F)</h2>
             <p class="subtle">Anthropic's foundations-level certification for engineers and architects building production systems with Claude — covering agent architecture, tool design, Claude Code, prompt engineering, and context management.</p>
           </div>
-          <aside class="cert-score" aria-label="Practice exam result">
+          <aside class="cert-score cert-score-practice" aria-label="Practice exam result">
             <strong>60 / 60</strong>
             <span>Official practice exam</span>
             <span class="cert-score-scale">1000 / 1000 · 34 min</span>
@@ -103,6 +104,26 @@
         </p>
 
         <div class="cert-grid">
+
+          <!-- Credential -->
+          <article class="cert-card cert-card-wide cert-credential">
+            <h3>Credential</h3>
+            <p class="subtle">Issued by Anthropic · Valid May 3, 2026 — Nov 3, 2026 · Certificate No: bbx6rqezxvw6 · <a href="https://verify.skilljar.com/c/bbx6rqezxvw6" target="_blank" rel="noopener">Verify ↗</a></p>
+            <div class="credential-grid">
+              <figure class="credential-figure">
+                <a href="assets/CCA-F_certificate.pdf" target="_blank" rel="noopener">
+                  <img src="assets/CCA-F_certificate.png" alt="Claude Certified Architect — Foundations certificate awarded to Manju Malateshappa" loading="lazy">
+                </a>
+                <figcaption>Certificate <a href="assets/CCA-F_certificate.pdf" target="_blank" rel="noopener">(PDF)</a></figcaption>
+              </figure>
+              <figure class="credential-figure">
+                <a href="assets/score_details.png" target="_blank" rel="noopener">
+                  <img src="assets/score_details.png" alt="Anthropic email confirming CCA-F pass with score 821/1000" loading="lazy">
+                </a>
+                <figcaption>Score notification — 821 / 1000</figcaption>
+              </figure>
+            </div>
+          </article>
 
           <!-- Exam format -->
           <article class="cert-card">
@@ -194,6 +215,7 @@
               <li><strong>Context management bleeds into everything.</strong> Caching breakpoints, conversation history, retrieval strategies, and lost-in-the-middle effects show up in almost every agent design — not just dedicated context-management problems.</li>
               <li><strong>The Claude Code / Anthropic SDK boundary is sharper than it looks.</strong> Skills, hooks, CLAUDE.md, and MCP configuration are Claude Code constructs; <code>tool_choice</code>, <code>stop_reason</code>, batch processing, and message handling are SDK constructs. Mixing them up is the most common conceptual mistake.</li>
               <li><strong>Claude Code's configuration surface is deep.</strong> Hooks (PreToolUse vs PostToolUse), settings hierarchy (user → project → directory), MCP server scoping, and skills frontmatter parameters all have precedence rules where small details change behavior significantly.</li>
+              <li><strong>Calibrate practice difficulty to the real exam, not harder.</strong> Overly contrived practice with multi-layered distractors trains the wrong instincts — the official exam tests judgment between two plausible answers, not gotcha trivia. My generator prompt enforces this calibration explicitly.</li>
             </ul>
           </article>
 
@@ -771,6 +793,10 @@ the answer key only, matching the real exam format.</code></pre>
               <li>
                 <span class="resource-name">Claude Docs — API, Claude Code, Agent SDK</span>
                 <span class="resource-meta"><a href="https://docs.claude.com" target="_blank" rel="noopener">docs.claude.com</a></span>
+              </li>
+              <li>
+                <span class="resource-name"><a href="https://anthropic.skilljar.com/" target="_blank" rel="noopener">Anthropic Academy</a></span>
+                <span class="resource-meta">Building with the Claude API · Introduction to Subagents · MCP: Advanced Topics</span>
               </li>
               <li>
                 <span class="resource-name">Model Context Protocol spec</span>
