@@ -183,7 +183,15 @@
   const render = () => {
     const hash = (location.hash || '').replace(/^#/, '');
     const id = CERT_IDS.includes(hash) ? hash : null;
-    details.forEach(d => d.classList.toggle('is-active', d.id === id));
+    details.forEach(d => {
+      const active = d.id === id;
+      d.classList.toggle('is-active', active);
+      // Force-reveal: IntersectionObserver was attached while .cert-detail was
+      // display:none, so on mobile Safari/Chrome it doesn't fire when we flip
+      // to display:block here. Skip the animation and mark .in directly so the
+      // section becomes opacity:1 immediately.
+      if (active) d.classList.add('in');
+    });
     root.classList.toggle('cert-open', !!id);
     window.scrollTo(0, 0);
     if (id) {
