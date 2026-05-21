@@ -191,6 +191,8 @@
       // to display:block here. Skip the animation and mark .in directly so the
       // section becomes opacity:1 immediately.
       if (active) d.classList.add('in');
+      // Collapse any open <details> elements when navigating away from a cert.
+      if (!active) d.querySelectorAll('details[open]').forEach(det => det.removeAttribute('open'));
     });
     root.classList.toggle('cert-open', !!id);
     window.scrollTo(0, 0);
