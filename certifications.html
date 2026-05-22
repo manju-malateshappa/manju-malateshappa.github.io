@@ -12,7 +12,8 @@
   <meta property="og:type" content="website">
 
   <script>
-    /* Pre-paint: enable JS-driven cert routing and avoid hero flash on deep links */
+    /* Pre-paint: theme, JS class, and cert routing — all before CSS renders */
+    (function(){var t=localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t);}else if(window.matchMedia('(prefers-color-scheme: light)').matches){document.documentElement.setAttribute('data-theme','light');}})();
     document.documentElement.classList.add('js');
     if (['#claude-architect', '#terraform-associate'].includes(location.hash)) {
       document.documentElement.classList.add('cert-open');
